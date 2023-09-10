@@ -1,54 +1,42 @@
 import { ContactForm } from './ContactsForm/ContactForm';
-import { Filter } from './ContactList/Filter/Filter';
+import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList/ContactList';
 import React from 'react';
 
 export class App extends React.Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
     filter: '',
   };
 
   onInputChange = e => {
     this.setState({ [e.target.name]: e.target.value });
-    console.log(e.target.name);
-  };
-
-  reset = e => {
-    this.setState({ name: '', number: '' });
-    e.target.elements.name.value = '';
-    e.target.elements.number.value = '';
   };
 
   onFormSubmit = e => {
     e.preventDefault();
     const name = e.target.elements.name.value;
-    const isInclude = this.state.contacts.filter(el => el.name === name);
-    if (isInclude.length !== 0) {
+    const number = e.target.elements.number.value;
+    if (this.state.contacts.find(el => el.name === name)) {
       alert(`${name} is already in contacts`);
       return;
     }
     this.setState(prevState => ({
       contacts: [
         ...prevState.contacts,
-        { name: prevState.name, number: prevState.number, id: `${Date.now()}` },
+        { name: name, number: number, id: `${Date.now()}` },
       ],
     }));
-    this.reset(e);
   };
 
   onSearch = () => {
     return this.state.contacts.filter(el =>
-      el.name.toLowerCase().includes(this.state.filter)
+      el.name.toLowerCase().includes(this.state.filter.toLowerCase())
     );
   };
   onDelete = id => {
-    const newContacts = this.onSearch().filter(el => el.id !== id);
+    const contacts = [...this.state.contacts];
+    const newContacts = contacts.filter(el => el.id !== id);
     this.setState({ contacts: newContacts });
   };
   render() {

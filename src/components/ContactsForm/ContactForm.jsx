@@ -11,9 +11,19 @@ export class ContactForm extends React.Component {
     name: '',
     number: '',
   };
+  reset = e => {
+    this.setState({ name: '', number: '' });
+    e.target.elements.name.value = '';
+    e.target.elements.number.value = '';
+  };
   render() {
     return (
-      <StyledContactForm onSubmit={e => this.props.onFormSubmit(e)}>
+      <StyledContactForm
+        onSubmit={e => {
+          this.props.onFormSubmit(e);
+          this.reset(e);
+        }}
+      >
         <StyledContactlabel>
           Name
           <StyledContactInput

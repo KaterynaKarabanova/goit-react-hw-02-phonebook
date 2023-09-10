@@ -6,6 +6,7 @@ export const ContactList = ({ contacts, onDelete }) => {
     <StyledContactList>
       {contacts.map(el => (
         <ContactItem
+          key={el.id}
           id={el.id}
           name={el.name}
           number={el.number}

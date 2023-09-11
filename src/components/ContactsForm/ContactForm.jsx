@@ -11,6 +11,9 @@ export class ContactForm extends React.Component {
     name: '',
     number: '',
   };
+  onInputChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
   reset = e => {
     this.setState({ name: '', number: '' });
     e.target.elements.name.value = '';
@@ -32,7 +35,7 @@ export class ContactForm extends React.Component {
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
-            onChange={e => this.props.onInputChange(e)}
+            onChange={e => this.onInputChange(e)}
           />
         </StyledContactlabel>
         <StyledContactlabel>
@@ -43,7 +46,7 @@ export class ContactForm extends React.Component {
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
-            onChange={e => this.props.onInputChange(e)}
+            onChange={e => this.onInputChange(e)}
           />
         </StyledContactlabel>
         <StyledContactButton type="submit">Add contact</StyledContactButton>

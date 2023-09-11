@@ -35,9 +35,9 @@ export class App extends React.Component {
     );
   };
   onDelete = id => {
-    const contacts = [...this.state.contacts];
-    const newContacts = contacts.filter(el => el.id !== id);
-    this.setState({ contacts: newContacts });
+    this.setState(prev => ({
+      contacts: prev.contacts.filter(el => el.id !== id),
+    }));
   };
   render() {
     return (
@@ -49,10 +49,7 @@ export class App extends React.Component {
         }}
       >
         <h1>Phonebook</h1>
-        <ContactForm
-          onInputChange={this.onInputChange}
-          onFormSubmit={this.onFormSubmit}
-        />
+        <ContactForm onFormSubmit={this.onFormSubmit} />
         <h2>Contacts</h2>
         <Filter onChange={this.onInputChange} />
         <ContactList contacts={this.onSearch()} onDelete={this.onDelete} />

@@ -28,7 +28,19 @@ export class App extends React.Component {
       ],
     }));
   };
-
+  componentDidUpdate(_, prevState) {
+    const { contacts } = this.state;
+    if (prevState.contacts.length !== contacts.length) {
+      window.localStorage.setItem('Contacts', JSON.stringify(contacts));
+    }
+  }
+  componentDidMount() {
+    const contactsLS = JSON.parse(window.localStorage.getItem('Contacts'));
+    console.log(contactsLS);
+    if (contactsLS?.length) {
+      this.setState({ contacts: contactsLS });
+    }
+  }
   onSearch = () => {
     return this.state.contacts.filter(el =>
       el.name.toLowerCase().includes(this.state.filter.toLowerCase())
